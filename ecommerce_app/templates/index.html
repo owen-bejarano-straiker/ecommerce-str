@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <h2>Small Demo Storefront</h2>
+    <p>Pick products, add to cart, and run a fake checkout flow.</p>
+</section>
+
+<section class="grid">
+    {% for p in products %}
+    <article class="card">
+        <h3>{{ p.name }}</h3>
+        <p class="meta">SKU: {{ p.sku }} | {{ p.category }}</p>
+        <p class="price">${{ '%.2f'|format(p.price) }}</p>
+        <p class="stock">Stock: {{ p.stock }}</p>
+        <form action="{{ url_for('store.cart_add') }}" method="post" class="inline-form">
+            <input type="hidden" name="sku" value="{{ p.sku }}">
+            <label>
+                Qty
+                <input type="number" name="quantity" min="1" value="1">
+            </label>
+            <button type="submit">Add to cart</button>
+        </form>
+    </article>
+    {% endfor %}
+</section>
+{% endblock %}

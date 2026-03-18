@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Checkout</h2>
+<p class="summary">Items: {{ items|length }} | Subtotal: <strong>${{ '%.2f'|format(subtotal) }}</strong></p>
+
+<form action="{{ url_for('store.checkout_submit') }}" method="post" class="checkout-form">
+    <label>
+        Name
+        <input type="text" name="name" required>
+    </label>
+
+    <label>
+        Tier
+        <select name="tier">
+            <option value="regular">Regular</option>
+            <option value="silver">Silver</option>
+            <option value="gold">Gold</option>
+        </select>
+    </label>
+
+    <label>
+        Coupon (optional)
+        <input type="text" name="coupon" placeholder="WELCOME10">
+    </label>
+
+    <button type="submit">Place fake order</button>
+</form>
+{% endblock %}

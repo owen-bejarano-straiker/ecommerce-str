@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="hero">
+    <h2>Order Confirmed</h2>
+    <p>Thanks {{ order.customer }}, your fake order was processed.</p>
+</section>
+
+<table>
+    <thead>
+        <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Line Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in order["items"] %}
+        <tr>
+            <td>{{ item.name }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>${{ '%.2f'|format(item.line_total) }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<div class="totals">
+    <p>Tier: {{ order.tier|capitalize }}</p>
+    <p>Coupon: {{ order.coupon or 'None' }}</p>
+    <p>Subtotal: ${{ '%.2f'|format(order.totals.subtotal) }}</p>
+    <p>Discount: -${{ '%.2f'|format(order.totals.discount) }}</p>
+    <p>Tax: ${{ '%.2f'|format(order.totals.tax) }}</p>
+    <p class="grand-total">Total: ${{ '%.2f'|format(order.totals.total) }}</p>
+</div>
+
+<p><a class="button" href="{{ url_for('store.home') }}">Back to shop</a></p>
+{% endblock %}
